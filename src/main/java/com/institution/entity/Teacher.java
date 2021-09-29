@@ -7,6 +7,9 @@ import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 /**
  * <p>
  * 
@@ -27,10 +30,11 @@ public class Teacher implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    @NotBlank(message = "姓名不能为空")
     private String name;
 
     private Integer type;
-
+    @NotBlank(message = "用户名不能为空")
     private String username;
 
     private String password;
@@ -43,9 +47,9 @@ public class Teacher implements Serializable {
 
     private String avatar;
 
+    @Email(message = "请输入正确的邮箱")
+    @NotBlank(message = "邮箱不能为空")
     private String email;
 
     private LocalDateTime gmtCreate;
-
-
 }

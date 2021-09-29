@@ -3,6 +3,7 @@ package com.institution.com.exception;
 import com.institution.com.lang.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.ShiroException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -46,6 +47,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = IllegalArgumentException.class)
     public Result handler(IllegalArgumentException e){
         log.error("Assert异常-------------{}", e);
+        return Result.failed(401, e.getMessage(), null);
+    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(LockedAccountException.class)
+    public Result handler(LockedAccountException e){
+        log.error("账户已锁定-------------{}", e);
         return Result.failed(401, e.getMessage(), null);
     }
 }

@@ -23,9 +23,9 @@ public class Elective implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private Long studentId;
+    private Long student_id;
 
-    private Long courseId;
+    private Long course_id;
 
     private Integer rest;
 

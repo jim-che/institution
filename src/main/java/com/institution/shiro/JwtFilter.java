@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ import java.io.IOException;
  */
 @Component
 public class JwtFilter extends AuthenticatingFilter {
-    @Autowired
+    @Resource
     JwtUtils jwtUtils;
 
     @Override
@@ -41,18 +42,23 @@ public class JwtFilter extends AuthenticatingFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
-        System.out.println("判断拦截中");
+        System.out.println("----判断拦截中----");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String jwt = request.getHeader("Authorization");
         if(!StringUtils.hasLength(jwt)){
             return true;
         }else{
+            /**校验JWT
+             *
+             * 执行登陆*/
             Claims token = jwtUtils.getClaimByToken(jwt);
-            if(token==null||jwtUtils.isTokenExpired(token.getExpiration())){
-                throw new ExpiredCredentialsException("token已失效");
+
+            if(token == null|| jwtUtils.isTokenExpired(token.getExpiration())){
+                throw new ExpiredCredentialsException("Token已失效，请重新登录");
             }
+            // 执行登陆
+            return executeLogin(servletRequest, servletResponse);
         }
-        return executeLogin(servletRequest, servletResponse);
     }
 
     @Override

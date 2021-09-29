@@ -23,15 +23,13 @@ public class Arrangement implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private Long classId;
+    private Long class_id;
 
-    private Long teacherId;
+    private Long teacher_id;
 
-    private Long courseId;
+    private Long course_id;
 
     private Long place;
 
     private String time;
-
-
 }

@@ -11,12 +11,14 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 /**
- * @author chenguo
+ * jwt工具类
+ *
+ * @author SZ-UserBDG7
  */
 @Slf4j
 @Data
 @Component
-@ConfigurationProperties(prefix = "institution.jwt")
+@ConfigurationProperties(prefix = "ins.jwt")
 public class JwtUtils {
 
     private String secret;
